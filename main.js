@@ -1,23 +1,28 @@
 window.addEventListener('load', () => {
+  const content = document.getElementById('content');
+  const predictButton = document.getElementById('predict-button');
+  predictButton.addEventListener('click', getPred);
+  const btn = document.getElementById("talk");
+  const predictionList = document.getElementById('prediction-list');
   try{
-    const btn = document.getElementById("talk");
-    const content = document.getElementById("content");
+    
+    //const content = document.getElementById("content");
     const SpeechRecog = window.SpeechRecognition|| window.webkitSpeechRecognition;
     const recog = new SpeechRecog();
     recog.onstart = function(){
-        console.log('voice is activated, you can speak into the microphone');
+        console.log('Debug -> Microphone active');
       };
     recog.onresult = function(event) {
         console.log(event);
         const current = event.resultIndex;
         const transcript = event.results[current][0].transcript;
         content.textContent = transcript;
-        document.getElementById("content").value = transcript; 
+        content.value = transcript; 
     }
     
     btn.addEventListener('click',()=>{
-        $('#content').empty()
-        $('#prediction-list').empty()
+        content.innerText = '';
+        predictionList.innerText = ''
         recog.start();
       });
 }catch(e){
@@ -27,19 +32,18 @@ window.addEventListener('load', () => {
    console.log(errorMsg);
 }
 })
-window.onload=function(){
-  }
-const predictButton = document.getElementById('predict-button');
-predictButton.addEventListener('click', getPred);
 
+//Add a feature
 const threshold = 0.8;
 
+
 async function getPred() {
-  const sentences=document.getElementById("content").value; 
   const predictionList = document.getElementById('prediction-list');
+  const sentence= content.value; 
+  
   const model = await toxicity.load(threshold);
-  const predictions = await model.classify(sentences);
-  console.log(`sentences: ${sentences}`);
+  const predictions = await model.classify(sentence);
+  console.log(`Debug-> sentence: ${sentence}`);
   
   predictions.forEach(p => {
       console.log(p);
