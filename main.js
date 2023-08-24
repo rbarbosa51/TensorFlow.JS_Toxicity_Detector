@@ -1,9 +1,23 @@
 window.addEventListener("load", () => {
+  //Animate Background
+  const body = document.querySelector("body");
+  let angle = 0;
+  setInterval(() => {
+    angle = (angle + 1) % 360;
+    body.style.setProperty(
+      "background-image",
+      `linear-gradient(${angle}deg, #fddede, #ccf9f9)`,
+    );
+  }, 25);
+  //Interact with the app's UI
   const content = document.getElementById("content");
-  const predictButton = document.getElementById("predict-button");
+  const predictButton = document.getElementById("predictButton");
   predictButton.addEventListener("click", getPred);
-  const btn = document.getElementById("talk");
-  const predictionList = document.getElementById("prediction-list");
+  predictButton.disabled = true;
+  const talkButton = document.getElementById("talk");
+  const predictionList = document.getElementById("predictionList");
+  const waiting = document.getElementById("wait");
+  waiting.style.display = "none";
   try {
     const SpeechRecog =
       window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -19,9 +33,10 @@ window.addEventListener("load", () => {
       content.value = transcript;
     };
 
-    btn.addEventListener("click", () => {
+    talkButton.addEventListener("click", () => {
       content.innerText = "";
       predictionList.innerText = "";
+      predictButton.disabled = false;
       recog.start();
     });
   } catch (e) {
@@ -32,20 +47,20 @@ window.addEventListener("load", () => {
   }
 });
 
-//Add a feature
 const threshold = 0.8;
 
 async function getPred() {
+  const waiting = document.getElementById("wait");
+  waiting.style.display = "flex";
   const content = document.getElementById("content");
-  const predictionList = document.getElementById("prediction-list");
+  const predictionList = document.getElementById("predictionList");
   const sentence = content.value;
   // eslint-disable-next-line
   const model = await toxicity.load(threshold);
   const predictions = await model.classify(sentence);
-  console.log(`Debug-> sentence: ${sentence}`);
-
+  // console.log(`Debug-> sentence: ${sentence}`);
   predictions.forEach((p) => {
-    console.log(p);
+    // console.log(p);
     const label = p.label;
     const results = p.results;
 
@@ -54,12 +69,13 @@ async function getPred() {
 
     if (match) {
       const listItem = document.createElement("li");
-      listItem.innerHTML = `<b><li> ${label} | Match : ${match} | Confidence : ${percentage}</li></b><hr>`;
+      listItem.innerHTML = `<b><div>${label} </div><div>Match : ${match}</div><div>Confidence: ${percentage}</div></b>`;
       predictionList.appendChild(listItem);
     } else {
       const listItem = document.createElement("li");
-      listItem.innerHTML = `<li> ${label} | Match : ${match} | Confidence : ${percentage}</li><hr>`;
+      listItem.innerHTML = `<div>${label} </div><div>Match : ${match}</div><div>Confidence: ${percentage}</div>`;
       predictionList.appendChild(listItem);
     }
   });
+  waiting.style.display = "none";
 }

@@ -1,0 +1,110 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+:root {
+  --primary: #fddede;
+  --secondary: #ccf9f9;
+  --text-color: #4a4a4a;
+}
+body {
+  padding: 1rem;
+  min-height: 100vh;
+  font-family: "Inter", sans-serif;
+}
+.t-center {
+  text-align: center;
+}
+.description {
+  margin: 1rem auto 1.6rem;
+  width: 75%;
+  text-align: left;
+}
+h1,
+p,
+#content,
+hr {
+  color: var(--text-color);
+}
+.prompt {
+  width: 75%;
+  margin: 0 auto;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+}
+#content {
+  margin-top: 0.5rem;
+  width: 100%;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 2rem;
+}
+.material-symbols-sharp {
+  font-variation-settings:
+    "FILL" 0,
+    "wght" 400,
+    "GRAD" 0,
+    "opsz" 48;
+}
+#talk {
+  width: 10%;
+  margin: 1rem;
+  font-size: 2rem;
+  border-radius: 0.8rem;
+}
+hr {
+  border: none;
+  border-top: 2px solid #ccc;
+  width: 75%;
+  margin: 0 auto;
+}
+.hr1::after {
+  display: inline-block;
+  position: relative;
+  content: "Press the button and speak";
+  font-size: 0.9em;
+}
+.hr2::after {
+  display: inline-block;
+  position: relative;
+  content: "Press the Prediction button";
+  font-size: 0.9em;
+}
+#predictButton {
+  width: 5rem;
+  font-size: 1rem;
+  border-radius: 0.8rem;
+  padding: 0.8rem;
+}
+#predictionList {
+  margin-top: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+}
+li {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  border-left: 1px solid var(--text-color);
+  text-align: left;
+  padding-left: 0.4rem;
+}
+#wait {
+  position: absolute;
+  background-color: #f3f9f9;
+  width: 35%;
+  height: 40%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 1px solid var(--text-color);
+  border-radius: 0.8rem;
+  /* display: flex; */
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+}
+#wait h2 {
+  color: var(--text-color);
+}
