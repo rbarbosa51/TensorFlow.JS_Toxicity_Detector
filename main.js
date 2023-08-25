@@ -1,3 +1,7 @@
+/**
+* Wait till the tensorflow core and model are downloaded from CDN before proceedin
+* 
+*/
 window.addEventListener("load", () => {
   //Animate Background
   const body = document.querySelector("body");
@@ -19,6 +23,7 @@ window.addEventListener("load", () => {
   const waiting = document.getElementById("wait");
   waiting.style.display = "none";
   try {
+    //Speech Recognition
     const SpeechRecog =
       window.SpeechRecognition || window.webkitSpeechRecognition;
     const recog = new SpeechRecog();
@@ -32,7 +37,7 @@ window.addEventListener("load", () => {
       content.textContent = transcript;
       content.value = transcript;
     };
-
+    //Enable
     talkButton.addEventListener("click", () => {
       content.innerText = "";
       predictionList.innerText = "";
@@ -40,15 +45,18 @@ window.addEventListener("load", () => {
       recog.start();
     });
   } catch (e) {
-    //Error handling code example
-    const errorMsg = "Please enable your microphone!";
+    //show error message in alert and console log.
+    const errorMsg = e.message;
     alert(errorMsg);
     console.log(errorMsg);
   }
 });
 
+//The threshold of 0.8. The value was derrived from docuemntation
 const threshold = 0.8;
-
+/**
+ * getPred() gets triggered by the predict button. It runs the toxicity model against the value of content.
+ */
 async function getPred() {
   const waiting = document.getElementById("wait");
   waiting.style.display = "flex";
@@ -58,15 +66,13 @@ async function getPred() {
   // eslint-disable-next-line
   const model = await toxicity.load(threshold);
   const predictions = await model.classify(sentence);
-  // console.log(`Debug-> sentence: ${sentence}`);
+  
+  //Populate the list components with results
   predictions.forEach((p) => {
-    // console.log(p);
     const label = p.label;
     const results = p.results;
-
     const percentage = (results[0].probabilities[0] * 100).toPrecision(4);
     const match = results[0].match;
-
     if (match) {
       const listItem = document.createElement("li");
       listItem.innerHTML = `<b><div>${label} </div><div>Match : ${match}</div><div>Confidence: ${percentage}</div></b>`;
