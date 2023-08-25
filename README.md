@@ -6,7 +6,7 @@
 
 This page is an example of TensorFlow.JS Toxicity Detection AI model. It also utilizes the Web Speech API to transpile your speech to text. While it is not error proof, it does illustrate the potential uses of Artificial Intelligence in detecting toxic language. To use the page
 click on the prompt button and speak to your microphone. The API should transcribe your speech to text. Then use the predict button to analyze.
-Try saying: **'You are a moron'** or **'You are a bitch!'**
+Try saying: **'You are a moron'** or **'You are a b&^%*** !
 
 ## Table of Contents
 
