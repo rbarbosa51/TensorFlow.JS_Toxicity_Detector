@@ -16,7 +16,6 @@ Try saying: **'You are a moron'** or **'You are a b&^%*** !
 - [License](#license)
 - [Contributing](#contributing)
 - [Tests](#tests)
-- [Questions](#questions)
 
 ## Installation
 
