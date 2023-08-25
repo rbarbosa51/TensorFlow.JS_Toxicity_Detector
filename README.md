@@ -1,4 +1,4 @@
-# TensorFlow.JS Toxicity Detector
+# TensorFlow.JS_Toxicity_Detector
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
